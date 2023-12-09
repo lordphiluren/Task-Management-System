@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sushchenko.taskmanagment.entity.enums.Role;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class User {
     @Column(name = "email", unique = true)
     @NotNull(message = "Email cannot be empty")
     private String email;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
     @OneToMany(mappedBy = "creator")
     private List<Task> createdTasks;
     @OneToMany(mappedBy = "executor")

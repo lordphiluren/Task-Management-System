@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -26,6 +27,9 @@ public class Task {
     @Column(name = "description")
     @Size(max = 512, message = "Maximum description size is 512")
     private String description;
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false, referencedColumnName = "id")
     private User creator;
