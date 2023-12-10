@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
-                .securityMatcher("/api/**")
+                .securityMatcher("/api/v1/**")
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
