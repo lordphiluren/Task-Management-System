@@ -21,6 +21,7 @@ public class AuthController {
     public AuthResponse login(@RequestBody AuthRequest authRequest) {
         return authService.attemptLogin(authRequest.getEmail(), authRequest.getPassword());
     }
+
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody AuthRequest authRequest) {
         authService.signUp(modelMapper.map(authRequest, User.class));
