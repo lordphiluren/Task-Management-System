@@ -1,9 +1,11 @@
 package ru.sushchenko.taskmanagment.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "status")
 public class Status {
@@ -24,5 +27,6 @@ public class Status {
     @Size(min = 2, max = 32, message = "Status name size should be between 2 and 32")
     private String name;
     @OneToMany(mappedBy = "status")
+    @JsonIgnore
     private List<Task> tasks;
 }

@@ -1,10 +1,12 @@
 package ru.sushchenko.taskmanagment.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.sushchenko.taskmanagment.entity.enums.Role;
@@ -14,8 +16,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "id")
@@ -32,9 +35,12 @@ public class User {
     @Column(name = "role")
     private Role role;
     @OneToMany(mappedBy = "creator")
+    @JsonIgnore
     private List<Task> createdTasks;
     @OneToMany(mappedBy = "executor")
+    @JsonIgnore
     private List<Task> assignedTasks;
     @OneToMany(mappedBy = "creator")
+    @JsonIgnore
     private List<Comment> comments;
 }
