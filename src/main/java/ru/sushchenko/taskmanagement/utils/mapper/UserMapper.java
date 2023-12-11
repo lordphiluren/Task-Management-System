@@ -1,14 +1,14 @@
-package ru.sushchenko.taskmanagment.utils.mapper;
+package ru.sushchenko.taskmanagement.utils.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import ru.sushchenko.taskmanagment.dto.UserDto;
-import ru.sushchenko.taskmanagment.entity.User;
+import ru.sushchenko.taskmanagement.dto.UserDto;
+import ru.sushchenko.taskmanagement.entity.User;
 @Component
 @RequiredArgsConstructor
 public class UserMapper {
-    private final ModelMapper modelMapper;
+    private final CustomModelMapper modelMapper;
     public UserDto toDto(User user) {
         return modelMapper.map(user, UserDto.class);
     }

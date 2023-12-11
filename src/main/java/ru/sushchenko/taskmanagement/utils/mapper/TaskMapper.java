@@ -1,19 +1,18 @@
-package ru.sushchenko.taskmanagment.utils.mapper;
+package ru.sushchenko.taskmanagement.utils.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import ru.sushchenko.taskmanagment.dto.TaskRequestDto;
-import ru.sushchenko.taskmanagment.dto.TaskResponseDto;
-import ru.sushchenko.taskmanagment.entity.Priority;
-import ru.sushchenko.taskmanagment.entity.Status;
-import ru.sushchenko.taskmanagment.entity.Task;
-import ru.sushchenko.taskmanagment.entity.User;
+import ru.sushchenko.taskmanagement.dto.TaskRequestDto;
+import ru.sushchenko.taskmanagement.dto.TaskResponseDto;
+import ru.sushchenko.taskmanagement.entity.Priority;
+import ru.sushchenko.taskmanagement.entity.Status;
+import ru.sushchenko.taskmanagement.entity.Task;
 
 @Component
 @RequiredArgsConstructor
 public class TaskMapper{
-    private final ModelMapper modelMapper;
+    private final CustomModelMapper modelMapper;
     private final UserMapper userMapper;
     public TaskResponseDto toDto(Task task) {
         TaskResponseDto taskDto = modelMapper.map(task, TaskResponseDto.class);

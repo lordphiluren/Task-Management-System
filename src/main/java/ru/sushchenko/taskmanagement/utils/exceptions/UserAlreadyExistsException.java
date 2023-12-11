@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.utils.exceptions;
+package ru.sushchenko.taskmanagement.utils.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

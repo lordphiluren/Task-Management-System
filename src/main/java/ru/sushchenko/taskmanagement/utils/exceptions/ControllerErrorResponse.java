@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.utils.exceptions;
+package ru.sushchenko.taskmanagement.utils.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

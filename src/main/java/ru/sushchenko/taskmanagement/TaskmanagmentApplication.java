@@ -1,16 +1,16 @@
-package ru.sushchenko.taskmanagment;
+package ru.sushchenko.taskmanagement;
 
-import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import ru.sushchenko.taskmanagement.utils.mapper.CustomModelMapper;
 
 @SpringBootApplication
 public class TaskmanagmentApplication {
 	@Bean
-	public ModelMapper modelMapper() {
-		ModelMapper modelMapper = new ModelMapper();
+	public CustomModelMapper modelMapper() {
+		CustomModelMapper modelMapper = new CustomModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return modelMapper;
 	}

@@ -1,6 +1,7 @@
 package ru.sushchenko.taskmanagment.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,11 @@ public class TaskController {
     private final TaskService taskService;
     private final UserService userService;
     @GetMapping("")
-    public List<TaskResponseDto> getTasks() {
-        return taskService.getAllTasks()
+    public ResponseEntity<List<TaskResponseDto>> getTasks() {
+        return ResponseEntity.ok(taskService.getAllTasks()
                 .stream()
-                .map(taskMapper::git toDto)
-                .toList();
+                .map(taskMapper::toDto)
+                .toList());
     }
 
     @PostMapping("")
@@ -35,37 +36,25 @@ public class TaskController {
         Task task = taskMapper.toEntity(taskDto);
         task.setCreator(userService.getUserById(userPrincipal.getUserId()));
         taskService.addTask(task);
-        return ResponseEntity.ok("Task was successfully created");
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
     @GetMapping("/{taskId}")
     public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable Long taskId) {
-        return null;
+        return ResponseEntity.ok(taskMapper.toDto(taskService.getTaskById(taskId)));
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity<?> editTask(@PathVariable Long taskId) {
-        return null;
+    public ResponseEntity<?> editTask(@PathVariable Long taskId, @RequestBody TaskRequestDto taskDto) {
+        Task task = taskMapper.toEntity(taskDto);
+        task.setId(taskId);
+        taskService.updateTask(task);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/{taskId}")
     public ResponseEntity<?> deleteTask(@PathVariable Long taskId) {
-        return null;
+        taskService.deleteTaskById(taskId);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
-
-    @PatchMapping("/{taskId}/status")
-    public ResponseEntity<?> editTaskStatus(@PathVariable Long taskId) {
-        return null;
-    }
-
-    @PatchMapping("/{taskId}/executor")
-    public ResponseEntity<?> editTaskExecutor(@PathVariable Long taskId) {
-        return null;
-    }
-
-    @PatchMapping("/{taskId}/priority")
-    public ResponseEntity<?> editTaskPriority(@PathVariable Long taskId) {
-        return null;
-    }
-
 }
