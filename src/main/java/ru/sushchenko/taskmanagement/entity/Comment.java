@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.entity;
+package ru.sushchenko.taskmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

@@ -1,15 +1,15 @@
-package ru.sushchenko.taskmanagment.controller;
+package ru.sushchenko.taskmanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sushchenko.taskmanagment.dto.AuthRequest;
-import ru.sushchenko.taskmanagment.dto.AuthResponse;
-import ru.sushchenko.taskmanagment.entity.User;
-import ru.sushchenko.taskmanagment.service.AuthService;
-import ru.sushchenko.taskmanagment.utils.exceptions.ControllerErrorResponse;
+import ru.sushchenko.taskmanagement.dto.AuthRequest;
+import ru.sushchenko.taskmanagement.dto.AuthResponse;
+import ru.sushchenko.taskmanagement.entity.User;
+import ru.sushchenko.taskmanagement.service.AuthService;
+import ru.sushchenko.taskmanagement.utils.exceptions.ControllerErrorResponse;
 
 @RestController
 @RequestMapping("/api/v1/auth")

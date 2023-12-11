@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.service;
+package ru.sushchenko.taskmanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,10 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.sushchenko.taskmanagment.dto.AuthResponse;
-import ru.sushchenko.taskmanagment.entity.User;
-import ru.sushchenko.taskmanagment.security.JwtIssuer;
-import ru.sushchenko.taskmanagment.security.UserPrincipal;
+import ru.sushchenko.taskmanagement.dto.AuthResponse;
+import ru.sushchenko.taskmanagement.entity.User;
+import ru.sushchenko.taskmanagement.security.JwtIssuer;
+import ru.sushchenko.taskmanagement.security.UserPrincipal;
 
 @Service
 @RequiredArgsConstructor

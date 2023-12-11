@@ -1,13 +1,13 @@
-package ru.sushchenko.taskmanagment.service;
+package ru.sushchenko.taskmanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.sushchenko.taskmanagment.entity.User;
-import ru.sushchenko.taskmanagment.entity.enums.Role;
-import ru.sushchenko.taskmanagment.repo.UserRepo;
-import ru.sushchenko.taskmanagment.utils.exceptions.UserAlreadyExistsException;
-import ru.sushchenko.taskmanagment.utils.exceptions.UserNotFoundException;
+import ru.sushchenko.taskmanagement.entity.User;
+import ru.sushchenko.taskmanagement.entity.enums.Role;
+import ru.sushchenko.taskmanagement.repo.UserRepo;
+import ru.sushchenko.taskmanagement.utils.exceptions.UserAlreadyExistsException;
+import ru.sushchenko.taskmanagement.utils.exceptions.UserNotFoundException;
 
 @Service
 @RequiredArgsConstructor

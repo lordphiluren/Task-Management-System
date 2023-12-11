@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.security;
+package ru.sushchenko.taskmanagement.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

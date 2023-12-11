@@ -1,11 +1,11 @@
-package ru.sushchenko.taskmanagment.dto;
+package ru.sushchenko.taskmanagement.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
-import ru.sushchenko.taskmanagment.entity.enums.Role;
+import ru.sushchenko.taskmanagement.entity.enums.Role;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)

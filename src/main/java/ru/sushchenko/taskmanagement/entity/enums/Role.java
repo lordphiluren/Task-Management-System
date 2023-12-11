@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.entity.enums;
+package ru.sushchenko.taskmanagement.entity.enums;
 
 public enum Role {
     ADMIN, USER

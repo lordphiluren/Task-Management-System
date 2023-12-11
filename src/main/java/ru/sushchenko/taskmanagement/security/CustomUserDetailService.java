@@ -1,7 +1,7 @@
-package ru.sushchenko.taskmanagment.security;
+package ru.sushchenko.taskmanagement.security;
 
-import ru.sushchenko.taskmanagment.entity.User;
-import ru.sushchenko.taskmanagment.repo.UserRepo;
+import ru.sushchenko.taskmanagement.entity.User;
+import ru.sushchenko.taskmanagement.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

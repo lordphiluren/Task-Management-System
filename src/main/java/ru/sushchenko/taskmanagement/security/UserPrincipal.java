@@ -1,11 +1,10 @@
-package ru.sushchenko.taskmanagment.security;
+package ru.sushchenko.taskmanagement.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.sushchenko.taskmanagment.entity.User;
 
 import java.util.Collection;
 

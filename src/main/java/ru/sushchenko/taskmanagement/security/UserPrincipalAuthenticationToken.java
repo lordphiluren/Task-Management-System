@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.security;
+package ru.sushchenko.taskmanagement.security;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 

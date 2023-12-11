@@ -1,17 +1,17 @@
-package ru.sushchenko.taskmanagment.controller;
+package ru.sushchenko.taskmanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ru.sushchenko.taskmanagment.dto.TaskRequestDto;
-import ru.sushchenko.taskmanagment.dto.TaskResponseDto;
-import ru.sushchenko.taskmanagment.entity.Task;
-import ru.sushchenko.taskmanagment.security.UserPrincipal;
-import ru.sushchenko.taskmanagment.service.TaskService;
-import ru.sushchenko.taskmanagment.service.UserService;
-import ru.sushchenko.taskmanagment.utils.mapper.TaskMapper;
+import ru.sushchenko.taskmanagement.dto.TaskRequestDto;
+import ru.sushchenko.taskmanagement.dto.TaskResponseDto;
+import ru.sushchenko.taskmanagement.entity.Task;
+import ru.sushchenko.taskmanagement.security.UserPrincipal;
+import ru.sushchenko.taskmanagement.service.TaskService;
+import ru.sushchenko.taskmanagement.service.UserService;
+import ru.sushchenko.taskmanagement.utils.mapper.TaskMapper;
 
 import java.util.List;
 

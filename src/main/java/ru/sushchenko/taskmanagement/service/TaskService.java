@@ -1,11 +1,11 @@
-package ru.sushchenko.taskmanagment.service;
+package ru.sushchenko.taskmanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.sushchenko.taskmanagment.entity.Task;
-import ru.sushchenko.taskmanagment.repo.TaskRepo;
-import ru.sushchenko.taskmanagment.utils.exceptions.TaskNotFoundException;
+import ru.sushchenko.taskmanagement.entity.Task;
+import ru.sushchenko.taskmanagement.repo.TaskRepo;
+import ru.sushchenko.taskmanagement.utils.exceptions.TaskNotFoundException;
 
 import java.util.Date;
 import java.util.List;

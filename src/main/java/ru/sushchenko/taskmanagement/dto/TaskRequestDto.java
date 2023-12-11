@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.dto;
+package ru.sushchenko.taskmanagement.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

@@ -1,4 +1,4 @@
-package ru.sushchenko.taskmanagment.dto;
+package ru.sushchenko.taskmanagement.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -7,9 +7,9 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import ru.sushchenko.taskmanagment.entity.Comment;
-import ru.sushchenko.taskmanagment.entity.Priority;
-import ru.sushchenko.taskmanagment.entity.Status;
+import ru.sushchenko.taskmanagement.entity.Comment;
+import ru.sushchenko.taskmanagement.entity.Priority;
+import ru.sushchenko.taskmanagement.entity.Status;
 
 import java.util.Date;
 import java.util.List;
