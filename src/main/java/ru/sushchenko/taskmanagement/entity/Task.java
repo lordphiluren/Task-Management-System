@@ -1,10 +1,13 @@
 package ru.sushchenko.taskmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name="task")
 public class Task {
@@ -44,6 +48,6 @@ public class Task {
     @JoinColumn(name = "priority_id", referencedColumnName = "id")
     private Priority priority;
     @OneToMany(mappedBy = "task")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Comment> comments;
 }

@@ -29,5 +29,5 @@ public class TaskResponseDto {
     private UserDto executor;
     private Status status;
     private Priority priority;
-    private List<Comment> comments;
+    private List<CommentResponseDto> comments;
 }

@@ -5,19 +5,27 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import ru.sushchenko.taskmanagement.dto.TaskRequestDto;
 import ru.sushchenko.taskmanagement.dto.TaskResponseDto;
+import ru.sushchenko.taskmanagement.entity.Comment;
 import ru.sushchenko.taskmanagement.entity.Priority;
 import ru.sushchenko.taskmanagement.entity.Status;
 import ru.sushchenko.taskmanagement.entity.Task;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class TaskMapper{
     private final CustomModelMapper modelMapper;
     private final UserMapper userMapper;
+//    private final CommentMapper commentMapper;
     public TaskResponseDto toDto(Task task) {
         TaskResponseDto taskDto = modelMapper.map(task, TaskResponseDto.class);
         taskDto.setCreator(userMapper.toDto(task.getCreator()));
         taskDto.setExecutor(userMapper.toDto(task.getExecutor()));
+//        List<Comment> taskComments = task.getComments();
+//        // Make commentsDto from task comments
+//        taskDto.setComments(taskComments.stream().map(commentMapper::toDto).toList());
         return taskDto;
     }
 

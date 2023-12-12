@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import ru.sushchenko.taskmanagement.utils.mapper.CustomModelMapper;
 
 @SpringBootApplication
-public class TaskmanagmentApplication {
+public class TaskmanagementApplication {
 	@Bean
 	public CustomModelMapper modelMapper() {
 		CustomModelMapper modelMapper = new CustomModelMapper();
@@ -15,7 +15,7 @@ public class TaskmanagmentApplication {
 		return modelMapper;
 	}
 	public static void main(String[] args) {
-		SpringApplication.run(TaskmanagmentApplication.class, args);
+		SpringApplication.run(TaskmanagementApplication.class, args);
 	}
 
 }
