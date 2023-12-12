@@ -2,6 +2,7 @@ package ru.sushchenko.taskmanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +28,12 @@ public class AuthController {
         authService.signUp(modelMapper.map(authRequest, User.class));
         return ResponseEntity.ok("Successful registration");
     }
-
     @ExceptionHandler
     private ResponseEntity<ControllerErrorResponse> handleException(RuntimeException e) {
-        ControllerErrorResponse errorResponse = new ControllerErrorResponse(
-                e.getMessage(),
+        ControllerErrorResponse errorResponse = new ControllerErrorResponse(e.getMessage(),
                 System.currentTimeMillis());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        ResponseStatus responseStatus = AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class);
+        HttpStatus httpStatus = responseStatus != null ? responseStatus.value() : HttpStatus.INTERNAL_SERVER_ERROR;
+        return new ResponseEntity<>(errorResponse, httpStatus);
     }
 }

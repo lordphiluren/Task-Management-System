@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import ru.sushchenko.taskmanagement.entity.Task;
-import ru.sushchenko.taskmanagement.entity.User;
 
 import java.util.Date;
 

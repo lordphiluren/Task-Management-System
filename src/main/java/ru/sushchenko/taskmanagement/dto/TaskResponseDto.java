@@ -7,7 +7,6 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import ru.sushchenko.taskmanagement.entity.Comment;
 import ru.sushchenko.taskmanagement.entity.Priority;
 import ru.sushchenko.taskmanagement.entity.Status;
 
