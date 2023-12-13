@@ -25,9 +25,7 @@ public class TaskService {
     // Return list of tasks with full filter and pagination
     public List<Task> getAllTasks(Long statusId, Long priorityId,
                                   Integer offset, Integer limit) {
-        Task task = new Task();
-        task.setStatus(Status.builder().id(statusId).build());
-        task.setPriority(Priority.builder().id(priorityId).build());
+        Task task = enrichTask(statusId, priorityId);
         return getTasksFromMatcher(offset, limit, task);
     }
     @Transactional
@@ -53,15 +51,15 @@ public class TaskService {
     public List<Task> getUserTasksWithFilter(Long userId, Long statusId, Long priorityId,
                                              Boolean creator, Boolean executor, Integer offset,
                                              Integer limit) {
-
+        // Both true -> return all user tasks
         if (creator == null && executor == null) {
             return getAllTasksByUserId(userId, statusId, priorityId, offset, limit);
         }
-
+        // Return only created tasks
         if (creator != null && creator) {
             return getAllTasksByCreatorId(userId, statusId, priorityId, offset, limit);
         }
-
+        // Return only assigned tasks
         if (executor != null && executor) {
             return getAllTasksByExecutorId(userId, statusId, priorityId, offset, limit);
         }
@@ -81,9 +79,7 @@ public class TaskService {
     // Get all created tasks with filter by status and priority
     public List<Task> getAllTasksByCreatorId(Long userId, Long statusId,
                                              Long priorityId, Integer offset, Integer limit) {
-        Task task = new Task();
-        task.setStatus(Status.builder().id(statusId).build());
-        task.setPriority(Priority.builder().id(priorityId).build());
+        Task task = enrichTask(statusId, priorityId);
         task.setCreator(User.builder().id(userId).build());
 
         return getTasksFromMatcher(offset, limit, task);
@@ -92,9 +88,7 @@ public class TaskService {
     // Get all assigned tasks with filter by status and priority
     public List<Task> getAllTasksByExecutorId(Long userId, Long statusId,
                                               Long priorityId, Integer offset, Integer limit) {
-        Task task = new Task();
-        task.setStatus(Status.builder().id(statusId).build());
-        task.setPriority(Priority.builder().id(priorityId).build());
+        Task task = enrichTask(statusId, priorityId);
         task.setExecutor(User.builder().id(userId).build());
 
         return getTasksFromMatcher(offset, limit, task);
@@ -117,5 +111,12 @@ public class TaskService {
         User executor = task.getExecutor();
         return Objects.equals(task.getCreator().getId(), userId)
                 || (executor != null && Objects.equals(executor.getId(), userId));
+    }
+
+    private Task enrichTask(Long statusId, Long priorityId) {
+        Task task = new Task();
+        task.setStatus(Status.builder().id(statusId).build());
+        task.setPriority(Priority.builder().id(priorityId).build());
+        return task;
     }
 }
