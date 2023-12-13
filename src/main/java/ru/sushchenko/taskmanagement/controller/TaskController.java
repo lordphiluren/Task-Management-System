@@ -1,5 +1,8 @@
 package ru.sushchenko.taskmanagement.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -30,11 +33,17 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/tasks")
 @RequiredArgsConstructor
+@Tag(name = "Tasks", description = "Manipulating tasks")
 public class TaskController {
     private final TaskMapper taskMapper;
     private final TaskService taskService;
     private final CommentMapper commentMapper;
     private final CommentService commentService;
+    @Operation(
+            summary = "Get all tasks",
+            description = "Get all tasks by full filter and pagination"
+    )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("")
     public ResponseEntity<List<TaskResponseDto>> getTasks(
                                                     @RequestParam(name = "status", required = false) Long statusId,
@@ -47,7 +56,11 @@ public class TaskController {
                 .map(taskMapper::toDto)
                 .toList());
     }
-
+    @Operation(
+            summary = "Add task",
+            description = "Add task to system and set creator of currently authenticated user"
+    )
+    @SecurityRequirement(name = "JWT")
     @PostMapping("")
     public ResponseEntity<?> createTask(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                         @Valid @RequestBody TaskRequestDto taskDto) {
@@ -56,12 +69,20 @@ public class TaskController {
         taskService.addTask(task);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
+    @Operation(
+            summary = "Get task by id",
+            description = ""
+    )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{taskId}")
     public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable Long taskId) {
         return ResponseEntity.ok(taskMapper.toDto(taskService.getTaskById(taskId)));
     }
-
+    @Operation(
+            summary = "Edit task by id",
+            description = "Edit task by id if currently authenticated user is creator or executor of the task"
+    )
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{taskId}")
     public ResponseEntity<?> editTask(@PathVariable Long taskId,
                                       @Valid @RequestBody TaskRequestDto taskDto,
@@ -75,7 +96,11 @@ public class TaskController {
         throw new NotEnoughPrivilegesException("User with id: " + userPrincipal.getUserId() +
                 "has no permission to manipulate task with id: " + taskId);
     }
-
+    @Operation(
+            summary = "Delete task by id",
+            description = ""
+    )
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{taskId}")
     public ResponseEntity<?> deleteTask(@PathVariable Long taskId,
                                         @AuthenticationPrincipal UserPrincipal userPrincipal) {
@@ -88,6 +113,11 @@ public class TaskController {
                     " has no permission to manipulate task with id: " + taskId);
         }
     }
+    @Operation(
+            summary = "Add comment to task by id",
+            description = ""
+    )
+    @SecurityRequirement(name = "JWT")
     @PostMapping("/{taskId}/comments")
     public ResponseEntity<?> addComment(@PathVariable Long taskId,
                                         @AuthenticationPrincipal UserPrincipal userPrincipal,

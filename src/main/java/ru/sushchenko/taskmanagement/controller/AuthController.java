@@ -1,5 +1,7 @@
 package ru.sushchenko.taskmanagement.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -21,14 +23,22 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authorization", description = "Handles authorization via JWT token")
 public class AuthController {
     private final AuthService authService;
     private final ModelMapper modelMapper;
+    @Operation(
+            summary = "User login",
+            description = "Authenticate user to the system"
+    )
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody AuthRequest authRequest) {
         return authService.attemptLogin(authRequest.getEmail(), authRequest.getPassword());
     }
-
+    @Operation(
+            summary = "User signup",
+            description = "Handles user registration and adding him to the system"
+    )
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@Valid @RequestBody AuthRequest authRequest) {
         authService.signUp(modelMapper.map(authRequest, User.class));
