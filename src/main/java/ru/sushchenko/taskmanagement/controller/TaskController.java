@@ -1,10 +1,13 @@
 package ru.sushchenko.taskmanagement.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.sushchenko.taskmanagement.dto.CommentRequestDto;
 import ru.sushchenko.taskmanagement.dto.TaskRequestDto;
@@ -20,7 +23,9 @@ import ru.sushchenko.taskmanagement.utils.exceptions.NotEnoughPrivilegesExceptio
 import ru.sushchenko.taskmanagement.utils.mapper.CommentMapper;
 import ru.sushchenko.taskmanagement.utils.mapper.TaskMapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
@@ -45,7 +50,7 @@ public class TaskController {
 
     @PostMapping("")
     public ResponseEntity<?> createTask(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                        @RequestBody TaskRequestDto taskDto) {
+                                        @Valid @RequestBody TaskRequestDto taskDto) {
         Task task = taskMapper.toEntity(taskDto);
         task.setCreator(User.builder().id(userPrincipal.getUserId()).build());
         taskService.addTask(task);
@@ -59,7 +64,7 @@ public class TaskController {
 
     @PutMapping("/{taskId}")
     public ResponseEntity<?> editTask(@PathVariable Long taskId,
-                                      @RequestBody TaskRequestDto taskDto,
+                                      @Valid @RequestBody TaskRequestDto taskDto,
                                       @AuthenticationPrincipal UserPrincipal userPrincipal) {
         if(taskService.checkUserIsRelatedToTask(taskId, userPrincipal.getUserId())) {
             Task task = taskMapper.toEntity(taskDto);
@@ -86,7 +91,7 @@ public class TaskController {
     @PostMapping("/{taskId}/comments")
     public ResponseEntity<?> addComment(@PathVariable Long taskId,
                                         @AuthenticationPrincipal UserPrincipal userPrincipal,
-                                        @RequestBody CommentRequestDto commentDto) {
+                                        @Valid @RequestBody CommentRequestDto commentDto) {
         Comment comment = commentMapper.toEntity(commentDto);
         // Call to database in order to check existence of task
         comment.setTask(taskService.getTaskById(taskId));
@@ -101,5 +106,18 @@ public class TaskController {
         ResponseStatus responseStatus = AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class);
         HttpStatus httpStatus = responseStatus != null ? responseStatus.value() : HttpStatus.INTERNAL_SERVER_ERROR;
         return new ResponseEntity<>(errorResponse, httpStatus);
+    }
+    // validation exception handler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 }

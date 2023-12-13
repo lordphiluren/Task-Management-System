@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Comment {
     private Long id;
     @Column(name = "message")
     @NotNull(message = "Comment message cannot be empty")
+    @Size(max=512, message = "Comment message length should not be greater than 512 characters")
     private String message;
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)

@@ -1,16 +1,22 @@
 package ru.sushchenko.taskmanagement.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.sushchenko.taskmanagement.dto.AuthRequest;
 import ru.sushchenko.taskmanagement.dto.AuthResponse;
 import ru.sushchenko.taskmanagement.entity.User;
 import ru.sushchenko.taskmanagement.service.AuthService;
 import ru.sushchenko.taskmanagement.utils.exceptions.ControllerErrorResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -19,12 +25,12 @@ public class AuthController {
     private final AuthService authService;
     private final ModelMapper modelMapper;
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest authRequest) {
+    public AuthResponse login(@Valid @RequestBody AuthRequest authRequest) {
         return authService.attemptLogin(authRequest.getEmail(), authRequest.getPassword());
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<?> signUp(@Valid @RequestBody AuthRequest authRequest) {
         authService.signUp(modelMapper.map(authRequest, User.class));
         return ResponseEntity.ok("Successful registration");
     }
@@ -35,5 +41,18 @@ public class AuthController {
         ResponseStatus responseStatus = AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class);
         HttpStatus httpStatus = responseStatus != null ? responseStatus.value() : HttpStatus.INTERNAL_SERVER_ERROR;
         return new ResponseEntity<>(errorResponse, httpStatus);
+    }
+    // validation exception handler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 }
