@@ -1,15 +1,11 @@
 package ru.sushchenko.taskmanagement.controller;
 
-import com.sun.net.httpserver.Headers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.server.ResponseStatusException;
 import ru.sushchenko.taskmanagement.dto.CommentRequestDto;
 import ru.sushchenko.taskmanagement.dto.TaskRequestDto;
 import ru.sushchenko.taskmanagement.dto.TaskResponseDto;
@@ -19,7 +15,6 @@ import ru.sushchenko.taskmanagement.entity.User;
 import ru.sushchenko.taskmanagement.security.UserPrincipal;
 import ru.sushchenko.taskmanagement.service.CommentService;
 import ru.sushchenko.taskmanagement.service.TaskService;
-import ru.sushchenko.taskmanagement.service.UserService;
 import ru.sushchenko.taskmanagement.utils.exceptions.ControllerErrorResponse;
 import ru.sushchenko.taskmanagement.utils.exceptions.NotEnoughPrivilegesException;
 import ru.sushchenko.taskmanagement.utils.mapper.CommentMapper;
@@ -36,9 +31,13 @@ public class TaskController {
     private final CommentMapper commentMapper;
     private final CommentService commentService;
     @GetMapping("")
-    public ResponseEntity<List<TaskResponseDto>> getTasks() {
+    public ResponseEntity<List<TaskResponseDto>> getTasks(
+                                                    @RequestParam(name = "status", required = false) Long statusId,
+                                                    @RequestParam(name = "priority", required = false) Long priorityId,
+                                                    @RequestParam(name = "offset", required = false) Integer offset,
+                                                    @RequestParam(name = "limit", required = false) Integer limit) {
 
-        return ResponseEntity.ok(taskService.getAllTasks()
+        return ResponseEntity.ok(taskService.getAllTasks(statusId, priorityId, offset, limit)
                 .stream()
                 .map(taskMapper::toDto)
                 .toList());
