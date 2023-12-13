@@ -93,6 +93,14 @@ public class TaskService {
 
         return getTasksFromMatcher(offset, limit, task);
     }
+    @Transactional
+    // Check if user is creator or executor of the task
+    public boolean checkUserIsRelatedToTask(Long taskId, Long userId) {
+        Task task = getTaskById(taskId);
+        User executor = task.getExecutor();
+        return Objects.equals(task.getCreator().getId(), userId)
+                || (executor != null && Objects.equals(executor.getId(), userId));
+    }
     // Return list of tasks from matcher with pagination if set
     private List<Task> getTasksFromMatcher(Integer offset, Integer limit, Task task) {
         ExampleMatcher matcher = ExampleMatcher.matching()
@@ -104,16 +112,7 @@ public class TaskService {
         }
         return taskRepo.findAll(example);
     }
-    @Transactional
-    // Check if user is creator or executor of the task
-    public boolean checkUserIsRelatedToTask(Long taskId, Long userId) {
-        Task task = getTaskById(taskId);
-        User executor = task.getExecutor();
-        return Objects.equals(task.getCreator().getId(), userId)
-                || (executor != null && Objects.equals(executor.getId(), userId));
-    }
-
-    private Task enrichTask(Long statusId, Long priorityId) {
+    public Task enrichTask(Long statusId, Long priorityId) {
         Task task = new Task();
         task.setStatus(Status.builder().id(statusId).build());
         task.setPriority(Priority.builder().id(priorityId).build());
