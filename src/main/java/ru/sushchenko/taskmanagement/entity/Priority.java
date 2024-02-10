@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,7 +24,7 @@ public class Priority {
     @NotNull(message = "Priority name cannot be null")
     @Size(min = 2, max = 32, message = "Priority name size should be between 2 and 32")
     private String name;
-    @OneToMany(mappedBy = "priority")
+    @OneToMany(mappedBy = "priority", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> tasks;
 }

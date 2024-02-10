@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import ru.sushchenko.taskmanagement.entity.enums.Role;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -33,13 +33,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> createdTasks;
-    @OneToMany(mappedBy = "executor")
+    @OneToMany(mappedBy = "executor", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> assignedTasks;
     @OneToMany(mappedBy = "creator")
+    @Fetch(FetchMode.JOIN)
     @JsonIgnore
     private List<Comment> comments;
 }
